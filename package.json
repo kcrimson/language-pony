@@ -8,5 +8,9 @@
   "engines": {
     "atom": ">0.50.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies" : {
+    "gulp" : "3.9.1",
+    "gulp-tsc" : "1.1.5"
+  }
 }
