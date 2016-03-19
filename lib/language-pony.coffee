@@ -8,9 +8,10 @@ module.exports =
   activate: ->
     atom.workspace.observeTextEditors( (editor) ->
       editor.onDidSave( (event) ->
+        console.log(data)
         p = child_process.exec('ponyc',["--pass","syntax"])
         p.stdout.on('data', (data) ->
-          
+          console.log(data)
           result = error_regexp.exec(data)
 
           if result

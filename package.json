@@ -1,6 +1,6 @@
 {
   "name": "language-pony",
-  "main": "./lib/language-pony",
+  "main": "build/main",
   "version": "0.3.6",
   "description": "Language support for Pony in Atom.",
   "repository": "https://github.com/sylvanc/language-pony",
