@@ -1,4 +1,4 @@
-/// <reference path="node.d.ts" />
+/// <reference path="../typings/node/node.d.ts" />
 declare var atom;
 
 import path = require('path')
@@ -26,5 +26,5 @@ export function activate(state) {
     return true
 }
 
-class PonyCompiler{
+export class PonyCompiler{
 }

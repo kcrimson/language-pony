@@ -1,5 +1,5 @@
 "use strict";
-/// <reference path="node.d.ts" />
+/// <reference path="../typings/node/node.d.ts" />
 var path = require('path');
 var child_process = require('child_process');
 var error_regexp = /(.*\.pony):(\d*):(\d*): (.*)/gmi;
@@ -15,7 +15,6 @@ function activate(state) {
                 var process = child_process.execFile('ponyc', ["--pass", "syntax"], options);
                 process.stdout.on('data', function (data) {
                     var result = error_regexp.exec(data);
-                    console.log(result);
                 });
             });
         }
@@ -28,3 +27,4 @@ var PonyCompiler = (function () {
     }
     return PonyCompiler;
 }());
+exports.PonyCompiler = PonyCompiler;
