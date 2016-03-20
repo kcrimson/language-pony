@@ -12,7 +12,7 @@ describe('Calculator', () => {
 
     describe('#add', () => {
         it('return empty array', () => {
-          var result = subject.exec()
+          var result = subject.exec("")
           should(result).be.empty()
         });
     });

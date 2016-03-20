@@ -25,6 +25,18 @@ exports.activate = activate;
 var PonyCompiler = (function () {
     function PonyCompiler() {
     }
+    PonyCompiler.prototype.exec = function (basedir) {
+        var options = { cwd: basedir };
+        var process = child_process.execFile('ponyc', ["--pass", "syntax"], options);
+        console.log(process);
+        return [];
+    };
     return PonyCompiler;
 }());
 exports.PonyCompiler = PonyCompiler;
+var CompilerError = (function () {
+    function CompilerError() {
+    }
+    return CompilerError;
+}());
+exports.CompilerError = CompilerError;

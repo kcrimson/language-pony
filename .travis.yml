@@ -1,6 +1,11 @@
 language: node_js
 node_js:
-  - "0.10"
+  - "4"
+  - "5"
 before_script:
+  - wget -O - http://releases.ponylang.org/buildbot@lists.ponylang.org.gpg.key | sudo apt-key add -
+  - sudo add-apt-repository "deb http://releases.ponylang.org/apt ponyc main"
+  - sudo apt-get update
+  - sudo apt-get install ponyc
   - npm install -g gulp-cli
 script: gulp

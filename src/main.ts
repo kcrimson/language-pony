@@ -5,8 +5,6 @@ import path = require('path')
 import os = require('os')
 import child_process = require('child_process')
 
-const error_regexp = /(.*\.pony):(\d*):(\d*): (.*)/gmi
-
 export function activate(state) {
     console.log("activating Pony plugin")
     atom.workspace.observeTextEditors( (editor) => {
@@ -18,7 +16,9 @@ export function activate(state) {
           var options : child_process.ExecOptions = {cwd : basedir}
           var process = child_process.execFile('ponyc',["--pass","syntax"],options)
           process.stdout.on('data', (data) => {
-            var result = error_regexp.exec(data)
+            var error_regexp = /(.*\.pony):(\d*):(\d*): (.*)/gmi
+            console.log( error_regexp.exec(data) )
+            console.log(error_regexp.exec(data))
           })
         });
       }
@@ -27,7 +27,27 @@ export function activate(state) {
 }
 
 export class PonyCompiler{
-  exec(){
+
+  exec(basedir : string){
+    var options : child_process.ExecOptions = {
+      cwd : "/home/jarek/projects/opensource/language-pony"}
+    var process = child_process.execFile('ponyc',["--pass","final"],options)
+    process.stdout.on('data', (data) => {
+      var error_regexp = /(.*\.pony):(\d*):(\d*): (.*)/gmi
+      var result
+      do{
+        result = error_regexp.exec(data)
+        console.log(result)
+      } while(result)
+    })
+
     return [];
   }
+}
+
+export class CompilerError{
+  file : string
+  line : number
+  colum: number
+  message : string
 }
