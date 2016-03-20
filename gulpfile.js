@@ -15,7 +15,7 @@ gulp.task("compile-test", function(){
 });
 
 gulp.task("test", ['compile-test'],function(){
-  return gulp.src(["build-test/**/*.js"])
+  return gulp.src(["build-test/test/**/*.js"])
     .pipe(mocha())
     .pipe(gulp.dest("build-test"));
 });

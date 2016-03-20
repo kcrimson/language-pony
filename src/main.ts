@@ -27,4 +27,7 @@ export function activate(state) {
 }
 
 export class PonyCompiler{
+  exec(){
+    return [];
+  }
 }
