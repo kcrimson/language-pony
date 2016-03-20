@@ -3,9 +3,7 @@ node_js:
   - "4"
   - "5"
 before_script:
-  - wget -O - http://releases.ponylang.org/buildbot@lists.ponylang.org.gpg.key | sudo apt-key add -
-  - sudo add-apt-repository "deb http://releases.ponylang.org/apt ponyc main"
-  - sudo apt-get update
-  - sudo apt-get install ponyc
+  - wget http://releases.ponylang.org/debian/ponyc_0.1.7_amd64.deb
+  - sudo dpkg -i ponyc_0.1.7_amd64.deb
   - npm install -g gulp-cli
 script: gulp
