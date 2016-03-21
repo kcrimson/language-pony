@@ -1,6 +1,8 @@
 /// <reference path="../typings/node/node.d.ts" />
 declare var atom;
 
+
+import Promise from "ts-promise";
 import path = require('path')
 import os = require('os')
 import child_process = require('child_process')
@@ -28,26 +30,40 @@ export function activate(state) {
 
 export class PonyCompiler{
 
-  exec(basedir : string){
+  exec(basedir : string) : Array<CompilerError>{
     var options : child_process.ExecOptions = {
       cwd : "/home/jarek/projects/opensource/language-pony"}
     var process = child_process.execFile('ponyc',["--pass","final"],options)
+    var errors:Array<CompilerError> = []
+
     process.stdout.on('data', (data) => {
       var error_regexp = /(.*\.pony):(\d*):(\d*): (.*)/gmi
-      var result
       do{
-        result = error_regexp.exec(data)
-        console.log(result)
-      } while(result)
+        var result = error_regexp.exec(data)
+        if(result){
+          var [input,filename,line,column,message] = result
+          console.log(message)
+          errors.push(new CompilerError(filename,parseInt(line),parseInt(column),message))
+        } else{
+          break
+        }
+      } while(true)
     })
 
-    return [];
+    console.log(errors)
+    return errors;
   }
 }
 
 export class CompilerError{
   file : string
   line : number
-  colum: number
+  column: number
   message : string
+  constructor(file : string, line : number, column : number, message : string){
+    this.file  = file
+    this.line = line
+    this.column = column
+    this.message = message
+  }
 }
