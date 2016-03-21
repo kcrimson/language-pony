@@ -12,8 +12,9 @@ describe('Calculator', () => {
 
     describe('#add', () => {
         it('return empty array', () => {
-          var result = subject.exec("")
-          should(result).be.empty()
+          subject.exec("").then( (data) => {
+            should(data).has.length(3)
+          })
         });
     });
 });

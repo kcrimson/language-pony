@@ -30,28 +30,29 @@ export function activate(state) {
 
 export class PonyCompiler{
 
-  exec(basedir : string) : Array<CompilerError>{
+  exec(basedir : string) : Promise<Array<CompilerError>>{
     var options : child_process.ExecOptions = {
       cwd : "/home/jarek/projects/opensource/language-pony"}
     var process = child_process.execFile('ponyc',["--pass","final"],options)
-    var errors:Array<CompilerError> = []
+
+    var defer = Promise.defer<Array<CompilerError>>()
 
     process.stdout.on('data', (data) => {
       var error_regexp = /(.*\.pony):(\d*):(\d*): (.*)/gmi
+      var errors:Array<CompilerError> = []
       do{
         var result = error_regexp.exec(data)
         if(result){
           var [input,filename,line,column,message] = result
-          console.log(message)
           errors.push(new CompilerError(filename,parseInt(line),parseInt(column),message))
         } else{
           break
         }
       } while(true)
+      defer.resolve(errors)
     })
 
-    console.log(errors)
-    return errors;
+    return defer.promise;
   }
 }
 
