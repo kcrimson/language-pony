@@ -3,17 +3,19 @@
 import {PonyCompiler} from '../src/main';
 import should = require('should')
 
-describe('Calculator', () => {
+describe('PonyCompiler', () => {
     var subject : PonyCompiler;
 
     beforeEach(function () {
         subject = new PonyCompiler();
     });
 
-    describe('#add', () => {
-        it('return empty array', () => {
-          subject.exec("").then( (data) => {
-            should(data).has.length(3)
+    describe('#exec', () => {
+        it('return compilation errors', (done) => {
+          subject.exec("fixtures/syntax_error").then( (data) => {
+            console.log(data)
+            data.should.be.instanceof(Array).and.have.lengthOf(3)
+            done()
           })
         });
     });
